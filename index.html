@@ -1,0 +1,1076 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="color-scheme" content="light dark" />
+  <title>항공업계 지원 | 포트폴리오</title>
+  <meta name="description" content="국제경제학 기반의 항공업계 지원 포트폴리오" />
+
+  <style>
+    /* ------------------------------
+      Design tokens
+    ------------------------------ */
+    :root{
+      --bg: #0b1220;
+      --panel: rgba(255,255,255,.06);
+      --panel-2: rgba(255,255,255,.09);
+      --text: rgba(255,255,255,.92);
+      --muted: rgba(255,255,255,.68);
+      --line: rgba(255,255,255,.14);
+      --brand: #7c5cff;
+      --brand-2: #22c55e;
+      --danger: #ef4444;
+      --shadow: 0 10px 30px rgba(0,0,0,.28);
+      --radius: 18px;
+      --max: 1080px;
+
+      --fs-0: clamp(.95rem, .85rem + .2vw, 1.05rem);
+      --fs-1: clamp(1.05rem, .95rem + .35vw, 1.25rem);
+      --fs-2: clamp(1.35rem, 1.05rem + 1.2vw, 2.05rem);
+      --fs-3: clamp(1.85rem, 1.25rem + 2.2vw, 3rem);
+
+      --ease: cubic-bezier(.2,.9,.2,1);
+    }
+
+    /* Light theme overrides */
+    html[data-theme="light"]{
+      --bg: #f6f7fb;
+      --panel: rgba(10, 12, 18, .06);
+      --panel-2: rgba(10, 12, 18, .09);
+      --text: rgba(10,12,18,.92);
+      --muted: rgba(10,12,18,.66);
+      --line: rgba(10,12,18,.14);
+      --shadow: 0 12px 30px rgba(10,12,18,.10);
+    }
+
+    /* ------------------------------
+      Base
+    ------------------------------ */
+    *{ box-sizing: border-box; }
+    html, body{ height: 100%; }
+    body{
+      margin: 0;
+      font-family: ui-sans-serif, system-ui, -apple-system, "Apple SD Gothic Neo",
+                   "Noto Sans KR", "Malgun Gothic", Segoe UI, Roboto, Arial, sans-serif;
+      background: radial-gradient(1200px 500px at 20% -10%, rgba(124,92,255,.35), transparent 60%),
+                  radial-gradient(900px 500px at 90% 10%, rgba(34,197,94,.25), transparent 55%),
+                  var(--bg);
+      color: var(--text);
+      letter-spacing: -0.2px;
+      line-height: 1.55;
+      font-size: var(--fs-0);
+      overflow-x: hidden;
+    }
+
+    a{ color: inherit; text-decoration: none; }
+    button, input, textarea { font: inherit; }
+    ::selection{ background: rgba(124,92,255,.35); }
+
+    .container{
+      width: min(var(--max), calc(100% - 40px));
+      margin: 0 auto;
+    }
+
+    .sr-only{
+      position:absolute; width:1px; height:1px;
+      padding:0; margin:-1px; overflow:hidden; clip:rect(0,0,0,0); white-space:nowrap; border:0;
+    }
+
+    /* ------------------------------
+      Header / Nav
+    ------------------------------ */
+    header{
+      position: sticky; top: 0; z-index: 50;
+      backdrop-filter: blur(12px);
+      background: linear-gradient(to bottom, rgba(0,0,0,.18), rgba(0,0,0,0));
+      border-bottom: 1px solid rgba(255,255,255,.05);
+    }
+    html[data-theme="light"] header{
+      background: linear-gradient(to bottom, rgba(255,255,255,.8), rgba(255,255,255,0));
+      border-bottom: 1px solid rgba(10,12,18,.06);
+    }
+
+    .nav{
+      display:flex; align-items:center; justify-content:space-between;
+      padding: 14px 0;
+      gap: 12px;
+    }
+
+    .brand{
+      display:flex; align-items:center; gap:10px;
+      padding: 8px 10px;
+      border-radius: 999px;
+      transition: transform .2s var(--ease);
+    }
+    .brand:hover{ transform: translateY(-1px); }
+    .logo{
+      width: 34px; height: 34px; border-radius: 12px;
+      background:
+        radial-gradient(12px 12px at 30% 30%, rgba(255,255,255,.9), rgba(255,255,255,0) 60%),
+        linear-gradient(135deg, rgba(124,92,255,1), rgba(34,197,94,1));
+      box-shadow: 0 10px 25px rgba(124,92,255,.18);
+    }
+    .brand strong{ font-size: 1.02rem; }
+    .brand span{ color: var(--muted); font-size: .92rem; }
+
+    .nav-actions{
+      display:flex; align-items:center; gap:10px;
+    }
+
+    .pill{
+      display:inline-flex; align-items:center; gap:8px;
+      padding: 10px 12px;
+      border-radius: 999px;
+      border: 1px solid var(--line);
+      background: color-mix(in oklab, var(--panel), transparent 0%);
+      box-shadow: inset 0 1px 0 rgba(255,255,255,.08);
+      cursor:pointer;
+      transition: transform .15s var(--ease), background .15s var(--ease);
+    }
+    .pill:hover{ transform: translateY(-1px); background: var(--panel-2); }
+    .pill:active{ transform: translateY(0px) scale(.98); }
+
+    .nav-links{
+      display:flex; align-items:center; gap: 10px;
+    }
+    .nav-links a{
+      padding: 10px 12px;
+      border-radius: 999px;
+      border: 1px solid transparent;
+      color: var(--muted);
+      transition: background .15s var(--ease), color .15s var(--ease), border-color .15s var(--ease);
+    }
+    .nav-links a:hover{ background: var(--panel); color: var(--text); }
+    .nav-links a[aria-current="page"]{
+      background: var(--panel-2);
+      border-color: var(--line);
+      color: var(--text);
+    }
+
+    .hamburger{
+      display:none;
+      width: 44px; height: 44px;
+      justify-content:center; align-items:center;
+    }
+    .hamburger svg{ width: 20px; height: 20px; }
+
+    /* Mobile menu panel */
+    .mobile-panel{
+      display:none;
+      border-top: 1px solid var(--line);
+      padding: 12px 0 16px;
+    }
+    .mobile-panel .nav-links{
+      flex-direction: column;
+      align-items: stretch;
+      gap: 8px;
+    }
+
+    @media (max-width: 860px){
+      .nav-links{ display:none; }
+      .hamburger{ display:inline-flex; }
+      .mobile-panel{ display:none; }
+      .mobile-panel.open{ display:block; }
+    }
+
+    /* ------------------------------
+      Sections / Layout
+    ------------------------------ */
+    main{ padding-bottom: 64px; }
+
+    section{
+      padding: 64px 0;
+    }
+    .section-head{
+      display:flex; align-items:flex-end; justify-content:space-between;
+      gap: 16px;
+      margin-bottom: 18px;
+    }
+    .kicker{
+      display:inline-flex; align-items:center; gap:8px;
+      color: var(--muted);
+      font-weight: 600;
+    }
+    .dot{
+      width: 8px; height: 8px; border-radius: 99px;
+      background: linear-gradient(135deg, var(--brand), var(--brand-2));
+      box-shadow: 0 0 0 4px rgba(124,92,255,.14);
+    }
+    h1,h2,h3{ margin: 0; }
+    h1{ font-size: var(--fs-3); letter-spacing: -1px; line-height: 1.1; }
+    h2{ font-size: var(--fs-2); letter-spacing: -.7px; }
+    p{ margin: 0; color: var(--muted); }
+
+    .grid{
+      display:grid;
+      gap: 14px;
+    }
+    .grid.two{ grid-template-columns: 1.3fr .7fr; }
+    .grid.cards{ grid-template-columns: repeat(12, 1fr); }
+
+    @media (max-width: 860px){
+      .grid.two{ grid-template-columns: 1fr; }
+    }
+
+    .card{
+      border: 1px solid var(--line);
+      background: var(--panel);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      padding: 18px;
+      position: relative;
+      overflow: hidden;
+    }
+    .card::before{
+      content:"";
+      position:absolute; inset:-1px;
+      background: radial-gradient(500px 100px at 20% 0%, rgba(124,92,255,.18), transparent 60%),
+                  radial-gradient(500px 100px at 80% 0%, rgba(34,197,94,.14), transparent 55%);
+      pointer-events:none;
+      opacity: .55;
+      transition: opacity .2s var(--ease);
+    }
+    .card:hover::before{ opacity: .75; }
+
+    .card > *{ position: relative; }
+
+    .badge{
+      display:inline-flex; align-items:center; gap:8px;
+      padding: 8px 10px;
+      border-radius: 999px;
+      border: 1px solid var(--line);
+      background: color-mix(in oklab, var(--panel-2), transparent 0%);
+      color: var(--text);
+      font-weight: 650;
+      width: fit-content;
+    }
+
+    .btn{
+      display:inline-flex; align-items:center; justify-content:center;
+      gap: 10px;
+      padding: 12px 14px;
+      border-radius: 14px;
+      border: 1px solid var(--line);
+      background: var(--panel-2);
+      color: var(--text);
+      cursor:pointer;
+      transition: transform .15s var(--ease), background .15s var(--ease);
+      user-select:none;
+    }
+    .btn:hover{ transform: translateY(-1px); background: color-mix(in oklab, var(--panel-2), white 6%); }
+    .btn:active{ transform: translateY(0px) scale(.99); }
+    .btn.primary{
+      border-color: color-mix(in oklab, var(--brand), white 10%);
+      background: linear-gradient(135deg, color-mix(in oklab, var(--brand), white 10%), color-mix(in oklab, var(--brand-2), white 5%));
+      box-shadow: 0 18px 40px rgba(124,92,255,.20);
+    }
+    .btn.ghost{ background: transparent; }
+
+    .hero{
+      padding-top: 42px;
+      padding-bottom: 26px;
+    }
+
+    .hero .headline{
+      margin-top: 10px;
+    }
+    .hero .sub{
+      margin-top: 12px;
+      font-size: var(--fs-1);
+      color: var(--muted);
+      max-width: 62ch;
+    }
+    .hero .cta{
+      display:flex; gap: 10px; flex-wrap: wrap;
+      margin-top: 18px;
+    }
+
+    .stats{
+      display:grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 10px;
+      margin-top: 14px;
+    }
+    .stat{
+      padding: 14px;
+      border-radius: 16px;
+      background: rgba(255,255,255,.05);
+      border: 1px solid var(--line);
+    }
+    html[data-theme="light"] .stat{ background: rgba(10,12,18,.03); }
+    .stat strong{ display:block; font-size: 1.2rem; letter-spacing: -.4px; }
+    .stat span{ color: var(--muted); font-size: .92rem; }
+
+    @media (max-width: 520px){
+      .stats{ grid-template-columns: 1fr; }
+    }
+
+    /* ------------------------------
+      Cards grid
+    ------------------------------ */
+    .span-7{ grid-column: span 7; }
+    .span-5{ grid-column: span 5; }
+    .span-6{ grid-column: span 6; }
+    .span-4{ grid-column: span 4; }
+    .span-12{ grid-column: span 12; }
+
+    @media (max-width: 860px){
+      .span-7, .span-5, .span-6, .span-4{ grid-column: span 12; }
+    }
+
+    .list{
+      display:flex; flex-direction:column; gap: 10px;
+      margin-top: 12px;
+    }
+    .item{
+      display:flex; gap: 12px; align-items:flex-start;
+      padding: 12px;
+      border-radius: 16px;
+      border: 1px solid var(--line);
+      background: rgba(255,255,255,.03);
+    }
+    html[data-theme="light"] .item{ background: rgba(10,12,18,.025); }
+    .item .icon{
+      width: 40px; height: 40px;
+      display:grid; place-items:center;
+      border-radius: 14px;
+      border: 1px solid var(--line);
+      background: var(--panel);
+      flex: 0 0 auto;
+    }
+    .item .meta{ flex: 1; }
+    .item .meta strong{ display:block; letter-spacing: -.3px; }
+    .item .meta small{ display:block; color: var(--muted); margin-top: 2px; }
+
+    .chips{
+      display:flex; flex-wrap: wrap; gap: 8px;
+      margin-top: 12px;
+    }
+    .chip{
+      padding: 8px 10px;
+      border-radius: 999px;
+      border: 1px solid var(--line);
+      background: rgba(255,255,255,.03);
+      color: var(--muted);
+      font-weight: 600;
+      transition: transform .15s var(--ease), background .15s var(--ease), color .15s var(--ease);
+      cursor: default;
+    }
+    .chip:hover{
+      transform: translateY(-1px);
+      background: rgba(124,92,255,.12);
+      color: var(--text);
+    }
+
+    /* ------------------------------
+      Timeline
+    ------------------------------ */
+    .timeline-controls{
+      display:flex; gap: 10px; flex-wrap: wrap;
+      justify-content: flex-end;
+    }
+    .seg{
+      display:inline-flex; border: 1px solid var(--line);
+      border-radius: 999px; overflow:hidden;
+      background: rgba(255,255,255,.03);
+    }
+    .seg button{
+      border:0; background: transparent; color: var(--muted);
+      padding: 10px 12px; cursor:pointer;
+      transition: background .15s var(--ease), color .15s var(--ease);
+    }
+    .seg button[aria-pressed="true"]{
+      background: var(--panel-2); color: var(--text);
+    }
+
+    .timeline{
+      margin-top: 14px;
+      display:flex; flex-direction:column; gap: 10px;
+    }
+    details.tl{
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      background: rgba(255,255,255,.03);
+      overflow:hidden;
+    }
+    html[data-theme="light"] details.tl{ background: rgba(10,12,18,.025); }
+    details.tl summary{
+      list-style:none;
+      cursor:pointer;
+      padding: 14px 14px;
+      display:flex; align-items:center; justify-content:space-between;
+      gap: 12px;
+    }
+    details.tl summary::-webkit-details-marker{ display:none; }
+    .tl-title{
+      display:flex; flex-direction:column; gap: 2px;
+      min-width: 0;
+    }
+    .tl-title strong{ letter-spacing: -.3px; white-space: nowrap; overflow:hidden; text-overflow: ellipsis; }
+    .tl-title span{ color: var(--muted); font-size: .92rem; }
+    .tl-tags{ display:flex; gap: 8px; align-items:center; flex-wrap: wrap; justify-content:flex-end; }
+    .tag{
+      padding: 6px 9px; border-radius: 999px;
+      border: 1px solid var(--line);
+      color: var(--muted);
+      font-weight: 650;
+      font-size: .86rem;
+      background: rgba(255,255,255,.03);
+    }
+    .tl-body{
+      padding: 0 14px 14px;
+      color: var(--muted);
+    }
+    .tl-body ul{ margin: 10px 0 0 18px; }
+    .tl-body li{ margin: 6px 0; }
+
+    /* ------------------------------
+      Reveal animation
+    ------------------------------ */
+    .reveal{
+      opacity: 0;
+      transform: translateY(10px);
+      transition: opacity .6s var(--ease), transform .6s var(--ease);
+    }
+    .reveal.on{
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* ------------------------------
+      Footer
+    ------------------------------ */
+    footer{
+      padding: 18px 0 32px;
+      border-top: 1px solid var(--line);
+      color: var(--muted);
+    }
+
+    /* Toast */
+    .toast{
+      position: fixed;
+      left: 50%;
+      bottom: 20px;
+      transform: translateX(-50%) translateY(20px);
+      background: rgba(0,0,0,.7);
+      color: white;
+      border: 1px solid rgba(255,255,255,.18);
+      padding: 10px 12px;
+      border-radius: 999px;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity .25s var(--ease), transform .25s var(--ease);
+      z-index: 100;
+      backdrop-filter: blur(10px);
+      font-weight: 650;
+    }
+    html[data-theme="light"] .toast{
+      background: rgba(10,12,18,.82);
+    }
+    .toast.show{
+      opacity: 1;
+      transform: translateX(-50%) translateY(0);
+    }
+  </style>
+</head>
+
+<body>
+  <header>
+    <div class="container">
+      <div class="nav">
+        <a class="brand" href="#top" aria-label="맨 위로">
+          <div class="logo" aria-hidden="true"></div>
+          <div>
+            <strong>당신의 이름</strong><br />
+            <span>International Economics · Aviation Career</span>
+          </div>
+        </a>
+
+        <nav class="nav-links" aria-label="주요 메뉴">
+          <a href="#about">소개</a>
+          <a href="#focus">강점</a>
+          <a href="#experience">경험</a>
+          <a href="#skills">역량</a>
+          <a href="#contact">연락</a>
+        </nav>
+
+        <div class="nav-actions">
+          <button class="pill" id="themeBtn" type="button" aria-label="테마 전환">
+            <span aria-hidden="true">🌓</span>
+            <span class="hide-sm">Theme</span>
+          </button>
+
+          <button class="pill hamburger" id="menuBtn" type="button" aria-label="모바일 메뉴 열기" aria-expanded="false">
+            <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+              <path d="M4 7h16M4 12h16M4 17h16" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+            </svg>
+          </button>
+        </div>
+      </div>
+
+      <div class="mobile-panel" id="mobilePanel">
+        <nav class="nav-links" aria-label="모바일 메뉴">
+          <a href="#about">소개</a>
+          <a href="#focus">강점</a>
+          <a href="#experience">경험</a>
+          <a href="#skills">역량</a>
+          <a href="#contact">연락</a>
+        </nav>
+      </div>
+    </div>
+  </header>
+
+  <main id="top">
+    <section class="hero">
+      <div class="container grid two">
+        <div class="reveal">
+          <div class="kicker"><span class="dot"></span> 항공업계 취업 포트폴리오</div>
+          <h1 class="headline">
+            국제경제학 기반으로<br />
+            항공 비즈니스의 <span style="color:var(--brand)">수요·가격·정책</span>을 이해하는 인재
+          </h1>
+          <p class="sub">
+            국제학부 전공 · 국제통상학과 복수전공을 바탕으로,
+            데이터/리서치 사고와 조직 운영 경험(총무·부장)을 항공 산업 커리어로 연결합니다.
+          </p>
+
+          <div class="cta">
+            <a class="btn primary" href="#contact">
+              <span aria-hidden="true">✈️</span> 지원/연락하기
+            </a>
+            <a class="btn ghost" href="#experience">
+              <span aria-hidden="true">📌</span> 경험 보기
+            </a>
+            <button class="btn" type="button" id="copyEmailBtn">
+              <span aria-hidden="true">📋</span> 이메일 복사
+            </button>
+          </div>
+
+          <div class="stats">
+            <div class="stat">
+              <strong>국제경제학</strong>
+              <span>수요/가격/정책 분석 관점</span>
+            </div>
+            <div class="stat">
+              <strong>리더십</strong>
+              <span>총무 · 축제기획단 부장</span>
+            </div>
+            <div class="stat">
+              <strong>대외활동</strong>
+              <span>봉사 · 기획 · 학술 동호회</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="card reveal">
+          <div class="badge">한 줄 요약</div>
+          <h3 style="margin-top:10px;">항공산업과 국제경제의 접점에서, 실행력 있게 움직입니다.</h3>
+          <p style="margin-top:8px;">
+            현장 운영(조직/예산/일정) 경험 + 경제학적 사고(시장·정책·거시)를 결합해
+            항공사의 실무(노선/수익/마케팅/전략)로 확장 가능한 강점을 갖추고 있어요.
+          </p>
+
+          <div class="chips" aria-label="키워드">
+            <span class="chip">국제경제</span>
+            <span class="chip">국제통상</span>
+            <span class="chip">운영/총무</span>
+            <span class="chip">기획/리더십</span>
+            <span class="chip">커뮤니케이션</span>
+          </div>
+
+          <div style="display:flex; gap:10px; flex-wrap:wrap; margin-top:14px;">
+            <a class="btn" href="#skills"><span aria-hidden="true">🧩</span> 역량</a>
+            <a class="btn" href="#about"><span aria-hidden="true">👤</span> 소개</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="about">
+      <div class="container">
+        <div class="section-head">
+          <div>
+            <div class="kicker"><span class="dot"></span> About</div>
+            <h2>전공과 방향성</h2>
+          </div>
+        </div>
+
+        <div class="grid cards">
+          <div class="card span-7 reveal">
+            <h3>학업 배경</h3>
+            <p style="margin-top:6px;">
+              국제학부 전공, 국제통상학과 복수전공으로 국제경제학 중심의 학습을 이어왔습니다.
+              무역·환율·정책·거시 변수에 대한 이해를 바탕으로 산업(항공) 내 의사결정 구조를
+              논리적으로 파악하는 데 강점이 있습니다.
+            </p>
+
+            <div class="list">
+              <div class="item">
+                <div class="icon" aria-hidden="true">🎓</div>
+                <div class="meta">
+                  <strong>전공</strong>
+                  <small>국제학부</small>
+                </div>
+              </div>
+              <div class="item">
+                <div class="icon" aria-hidden="true">📚</div>
+                <div class="meta">
+                  <strong>복수전공</strong>
+                  <small>국제통상학과</small>
+                </div>
+              </div>
+              <div class="item">
+                <div class="icon" aria-hidden="true">📈</div>
+                <div class="meta">
+                  <strong>관심 분야</strong>
+                  <small>국제경제학 · 산업/시장 구조 · 정책 영향</small>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="card span-5 reveal">
+            <h3>항공업계 지원 포인트</h3>
+            <p style="margin-top:6px;">
+              항공산업은 수요 변동, 가격 전략, 규제/정책, 글로벌 이벤트에 크게 영향을 받습니다.
+              국제경제학 관점으로 이 요소들을 구조화해 이해하고, 조직 운영 경험으로 실행까지 연결합니다.
+            </p>
+
+            <div class="chips">
+              <span class="chip">수요/가격</span>
+              <span class="chip">거시/환율</span>
+              <span class="chip">규제/정책</span>
+              <span class="chip">글로벌 리스크</span>
+              <span class="chip">운영/협업</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="focus">
+      <div class="container">
+        <div class="section-head">
+          <div>
+            <div class="kicker"><span class="dot"></span> Strengths</div>
+            <h2>나의 강점 3가지</h2>
+          </div>
+        </div>
+
+        <div class="grid cards">
+          <div class="card span-4 reveal">
+            <div class="badge">1) 분석 관점</div>
+            <h3 style="margin-top:10px;">국제경제학 기반 구조화</h3>
+            <p style="margin-top:6px;">
+              변수(환율·유가·정책·경기)를 연결해 상황을 모델링하고,
+              항공 수요/수익에 어떤 영향을 주는지 논리적으로 설명합니다.
+            </p>
+          </div>
+
+          <div class="card span-4 reveal">
+            <div class="badge">2) 운영 경험</div>
+            <h3 style="margin-top:10px;">예산·일정·협업</h3>
+            <p style="margin-top:6px;">
+              총무/부장 역할을 통해 계획-집행-정산의 흐름을 경험했고,
+              이해관계자 조율과 실행력을 갖추었습니다.
+            </p>
+          </div>
+
+          <div class="card span-4 reveal">
+            <div class="badge">3) 커뮤니케이션</div>
+            <h3 style="margin-top:10px;">설득 가능한 문서화</h3>
+            <p style="margin-top:6px;">
+              복잡한 내용을 핵심부터 전달하고, 회의/자료/보고 형태로 정리하는 데 익숙합니다.
+              (면접 답변, 보고서, 기획안 등)
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="experience">
+      <div class="container">
+        <div class="section-head">
+          <div>
+            <div class="kicker"><span class="dot"></span> Experience</div>
+            <h2>대외활동 & 조직 경험</h2>
+          </div>
+
+          <div class="timeline-controls">
+            <div class="seg" role="group" aria-label="타임라인 필터">
+              <button type="button" class="filterBtn" data-filter="all" aria-pressed="true">전체</button>
+              <button type="button" class="filterBtn" data-filter="lead" aria-pressed="false">리더십</button>
+              <button type="button" class="filterBtn" data-filter="ops" aria-pressed="false">운영</button>
+              <button type="button" class="filterBtn" data-filter="academic" aria-pressed="false">학술</button>
+              <button type="button" class="filterBtn" data-filter="vol" aria-pressed="false">봉사</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="timeline reveal" id="timeline">
+          <details class="tl" data-tags="vol">
+            <summary>
+              <div class="tl-title">
+                <strong>봉사동아리 활동</strong>
+                <span>2019</span>
+              </div>
+              <div class="tl-tags">
+                <span class="tag">봉사</span>
+              </div>
+            </summary>
+            <div class="tl-body">
+              활동 내용(예: 기획/현장 진행/팀 협업)을 2~4줄로 정리해보세요.
+              <ul>
+                <li>예: 정기 봉사 프로그램 참여 및 운영 보조</li>
+                <li>예: 참여자 커뮤니케이션/공지/기록</li>
+              </ul>
+            </div>
+          </details>
+
+          <details class="tl" data-tags="ops,lead,vol">
+            <summary>
+              <div class="tl-title">
+                <strong>봉사동아리 총무</strong>
+                <span>2020</span>
+              </div>
+              <div class="tl-tags">
+                <span class="tag">운영</span>
+                <span class="tag">리더십</span>
+                <span class="tag">봉사</span>
+              </div>
+            </summary>
+            <div class="tl-body">
+              총무 경험은 항공사 실무의 “운영/정산/프로세스” 역량으로 연결하기 좋아요.
+              <ul>
+                <li>예: 예산 편성·집행·정산 프로세스 관리</li>
+                <li>예: 일정/자원 관리 및 협업 조율</li>
+                <li>예: 공지/문서화/회의록 등 운영 문서 작성</li>
+              </ul>
+            </div>
+          </details>
+
+          <details class="tl" data-tags="lead,ops">
+            <summary>
+              <div class="tl-title">
+                <strong>축제기획단 부장</strong>
+                <span>2023</span>
+              </div>
+              <div class="tl-tags">
+                <span class="tag">리더십</span>
+                <span class="tag">운영</span>
+              </div>
+            </summary>
+            <div class="tl-body">
+              “대규모 이벤트 운영”은 항공 서비스/운영과 유사한 점이 많습니다.
+              <ul>
+                <li>예: 기획안 수립(목표/예산/일정/리스크)</li>
+                <li>예: 팀 업무 분장 및 이해관계자(학교/업체/참여자) 조율</li>
+                <li>예: 현장 운영 및 이슈 대응, 사후 정리</li>
+              </ul>
+            </div>
+          </details>
+
+          <details class="tl" data-tags="academic">
+            <summary>
+              <div class="tl-title">
+                <strong>국제 학술동호회 활동</strong>
+                <span>2024</span>
+              </div>
+              <div class="tl-tags">
+                <span class="tag">학술</span>
+              </div>
+            </summary>
+            <div class="tl-body">
+              항공 산업 이슈(환율/유가/규제/수요)를 주제로 연결해도 좋아요.
+              <ul>
+                <li>예: 국제 이슈 리서치 및 발표/토론</li>
+                <li>예: 자료 수집(리포트/통계) & 인사이트 요약</li>
+              </ul>
+            </div>
+          </details>
+        </div>
+      </div>
+    </section>
+
+    <section id="skills">
+      <div class="container">
+        <div class="section-head">
+          <div>
+            <div class="kicker"><span class="dot"></span> Skills</div>
+            <h2>역량 요약</h2>
+          </div>
+        </div>
+
+        <div class="grid cards">
+          <div class="card span-6 reveal">
+            <h3>실무형 역량</h3>
+            <p style="margin-top:6px;">항공업계 직무(전략/기획/운영/마케팅 등)에 공통으로 유효한 역량을 중심으로 정리해 보세요.</p>
+            <div class="chips">
+              <span class="chip">문서화/보고</span>
+              <span class="chip">일정/프로젝트 관리</span>
+              <span class="chip">예산/정산</span>
+              <span class="chip">협업/조율</span>
+              <span class="chip">문제 해결</span>
+            </div>
+          </div>
+
+          <div class="card span-6 reveal">
+            <h3>분석/리서치 역량</h3>
+            <p style="margin-top:6px;">국제경제학 기반 사고를 “실제 분석 산출물”로 보여주면 강해집니다.</p>
+            <div class="chips">
+              <span class="chip">거시 변수 해석</span>
+              <span class="chip">시장 구조 이해</span>
+              <span class="chip">정책/규제 영향</span>
+              <span class="chip">인사이트 요약</span>
+              <span class="chip">발표/토론</span>
+            </div>
+          </div>
+
+          <div class="card span-12 reveal">
+            <h3>추천: 포트폴리오에 넣을 “산출물” 예시</h3>
+            <p style="margin-top:6px;">
+              아래 중 1~2개만 만들어도 포트폴리오 완성도가 확 올라가요.
+            </p>
+            <div class="list">
+              <div class="item">
+                <div class="icon" aria-hidden="true">📊</div>
+                <div class="meta">
+                  <strong>항공 수요 요인 분석 1p</strong>
+                  <small>환율/유가/경기/정책 변화 → 수요/운임/수익에 미치는 영향(도식화)</small>
+                </div>
+              </div>
+              <div class="item">
+                <div class="icon" aria-hidden="true">🧭</div>
+                <div class="meta">
+                  <strong>노선/시장 리서치 요약</strong>
+                  <small>특정 지역(예: 동남아/일본 등) 수요 특성, 경쟁 구도, 시사점 정리</small>
+                </div>
+              </div>
+              <div class="item">
+                <div class="icon" aria-hidden="true">🗂️</div>
+                <div class="meta">
+                  <strong>프로젝트 운영 케이스</strong>
+                  <small>축제기획단/총무 경험을 STAR 방식(상황-과제-행동-결과)으로 정리</small>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="contact">
+      <div class="container">
+        <div class="section-head">
+          <div>
+            <div class="kicker"><span class="dot"></span> Contact</div>
+            <h2>연락하기</h2>
+          </div>
+        </div>
+
+        <div class="grid cards">
+          <div class="card span-6 reveal">
+            <h3>기본 정보</h3>
+            <p style="margin-top:6px;">아래 정보를 네 것으로 바꿔 넣으면 끝!</p>
+            <div class="list" style="margin-top:12px;">
+              <div class="item">
+                <div class="icon" aria-hidden="true">📧</div>
+                <div class="meta">
+                  <strong id="emailText">yourname@email.com</strong>
+                  <small>이메일(클릭/복사 지원)</small>
+                </div>
+              </div>
+              <div class="item">
+                <div class="icon" aria-hidden="true">🔗</div>
+                <div class="meta">
+                  <strong>LinkedIn / Notion / GitHub</strong>
+                  <small>링크를 추가해 주세요</small>
+                </div>
+              </div>
+            </div>
+
+            <div style="display:flex; gap:10px; flex-wrap:wrap; margin-top:14px;">
+              <a class="btn primary" id="mailtoBtn" href="mailto:yourname@email.com?subject=항공업계%20지원%20포트폴리오%20문의">
+                <span aria-hidden="true">✉️</span> 메일 보내기
+              </a>
+              <button class="btn" type="button" id="copyEmailBtn2">
+                <span aria-hidden="true">📋</span> 이메일 복사
+              </button>
+            </div>
+          </div>
+
+          <div class="card span-6 reveal">
+            <h3>메시지 미리보기</h3>
+            <p style="margin-top:6px;">면접/채용 담당자에게 보낼 메시지 초안을 준비해뒀어.</p>
+
+            <div class="card" style="margin-top:12px; box-shadow:none;">
+              <p style="color:var(--text); margin:0;">
+                안녕하세요. 국제학부 전공 및 국제통상학과 복수전공으로 국제경제학을 중심으로 학습한 <strong>당신의 이름</strong>입니다.
+                총무/부장 경험을 통해 운영·기획·협업 역량을 쌓았고, 이를 바탕으로 항공 산업에서 수요·가격·정책 관점의 분석과 실행을 연결하고 싶습니다.
+                포트폴리오를 공유드리며, 관련 포지션에 지원 의사를 드립니다. 감사합니다.
+              </p>
+            </div>
+
+            <button class="btn" type="button" id="copyMsgBtn" style="margin-top:12px;">
+              <span aria-hidden="true">📝</span> 메시지 복사
+            </button>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="container" style="display:flex; justify-content:space-between; gap:12px; flex-wrap:wrap;">
+      <span>© <span id="year"></span> 당신의 이름. All rights reserved.</span>
+      <span>Built with HTML/CSS/JS · Responsive · Interactive</span>
+    </div>
+  </footer>
+
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+  <script>
+    // ------------------------------
+    // Helpers
+    // ------------------------------
+    const $ = (sel, el=document) => el.querySelector(sel);
+    const $$ = (sel, el=document) => Array.from(el.querySelectorAll(sel));
+
+    const toastEl = $("#toast");
+    let toastTimer = null;
+    function toast(msg){
+      toastEl.textContent = msg;
+      toastEl.classList.add("show");
+      clearTimeout(toastTimer);
+      toastTimer = setTimeout(() => toastEl.classList.remove("show"), 1800);
+    }
+
+    // ------------------------------
+    // Theme toggle (persist)
+    // ------------------------------
+    const themeBtn = $("#themeBtn");
+    const prefersLight = window.matchMedia && window.matchMedia("(prefers-color-scheme: light)").matches;
+    const saved = localStorage.getItem("theme");
+    const initialTheme = saved || (prefersLight ? "light" : "dark");
+    document.documentElement.dataset.theme = initialTheme;
+
+    themeBtn.addEventListener("click", () => {
+      const next = document.documentElement.dataset.theme === "light" ? "dark" : "light";
+      document.documentElement.dataset.theme = next;
+      localStorage.setItem("theme", next);
+      toast(next === "light" ? "라이트 모드" : "다크 모드");
+    });
+
+    // ------------------------------
+    // Mobile menu
+    // ------------------------------
+    const menuBtn = $("#menuBtn");
+    const mobilePanel = $("#mobilePanel");
+    menuBtn?.addEventListener("click", () => {
+      const open = mobilePanel.classList.toggle("open");
+      menuBtn.setAttribute("aria-expanded", String(open));
+    });
+    // Close mobile menu when clicking a link
+    $$("#mobilePanel a").forEach(a => a.addEventListener("click", () => {
+      mobilePanel.classList.remove("open");
+      menuBtn.setAttribute("aria-expanded", "false");
+    }));
+
+    // ------------------------------
+    // Smooth scroll (native)
+    // ------------------------------
+    document.documentElement.style.scrollBehavior = "smooth";
+
+    // ------------------------------
+    // Scroll spy for nav highlighting
+    // ------------------------------
+    const sections = ["about","focus","experience","skills","contact"].map(id => document.getElementById(id));
+    const navLinks = $$(".nav-links a").filter(a => a.getAttribute("href")?.startsWith("#"));
+
+    const spy = new IntersectionObserver((entries) => {
+      entries.forEach(e => {
+        if(!e.isIntersecting) return;
+        const id = e.target.id;
+        navLinks.forEach(a => {
+          const active = a.getAttribute("href") === "#" + id;
+          if(active) a.setAttribute("aria-current", "page");
+          else a.removeAttribute("aria-current");
+        });
+      });
+    }, { root: null, threshold: 0.55 });
+
+    sections.forEach(s => s && spy.observe(s));
+
+    // ------------------------------
+    // Reveal on scroll
+    // ------------------------------
+    const revealEls = $$(".reveal");
+    const rev = new IntersectionObserver((entries) => {
+      entries.forEach(e => {
+        if(e.isIntersecting){
+          e.target.classList.add("on");
+          rev.unobserve(e.target);
+        }
+      });
+    }, { threshold: 0.15 });
+    revealEls.forEach(el => rev.observe(el));
+
+    // ------------------------------
+    // Timeline filter
+    // ------------------------------
+    const filterBtns = $$(".filterBtn");
+    const timelineItems = $$("#timeline details.tl");
+
+    function setFilter(filter){
+      filterBtns.forEach(b => b.setAttribute("aria-pressed", String(b.dataset.filter === filter)));
+      timelineItems.forEach(item => {
+        const tags = (item.dataset.tags || "").split(",").map(s => s.trim());
+        const ok = filter === "all" || tags.includes(filter);
+        item.style.display = ok ? "" : "none";
+      });
+      toast(filter === "all" ? "전체 보기" : `필터: ${filter}`);
+    }
+
+    filterBtns.forEach(btn => btn.addEventListener("click", () => setFilter(btn.dataset.filter)));
+    setFilter("all");
+
+    // ------------------------------
+    // Copy email / message
+    // ------------------------------
+    const emailText = $("#emailText").textContent.trim();
+    const copyEmail = async () => {
+      try{
+        await navigator.clipboard.writeText(emailText);
+        toast("이메일이 복사됐어요!");
+      }catch{
+        toast("복사 실패: 브라우저 권한을 확인해 주세요.");
+      }
+    };
+
+    $("#copyEmailBtn")?.addEventListener("click", copyEmail);
+    $("#copyEmailBtn2")?.addEventListener("click", copyEmail);
+
+    $("#copyMsgBtn")?.addEventListener("click", async () => {
+      const msg = $(".card p strong") ? $(".card p").innerText : "메시지";
+      try{
+        await navigator.clipboard.writeText(msg);
+        toast("메시지가 복사됐어요!");
+      }catch{
+        toast("복사 실패: 브라우저 권한을 확인해 주세요.");
+      }
+    });
+
+    // Update mailto with the email
+    const mailtoBtn = $("#mailtoBtn");
+    if(mailtoBtn){
+      mailtoBtn.href = `mailto:${emailText}?subject=${encodeURIComponent("항공업계 지원 포트폴리오 문의")}`;
+    }
+
+    // ------------------------------
+    // Footer year
+    // ------------------------------
+    $("#year").textContent = String(new Date().getFullYear());
+  </script>
+</body>
+</html>
